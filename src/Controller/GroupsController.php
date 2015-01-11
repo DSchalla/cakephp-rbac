@@ -49,12 +49,7 @@ class GroupsController extends AppController
      */
     public function edit($id = null)
     {
-        $group = $this->Groups->get(
-            $id,
-            [
-                'contain' => []
-            ]
-        );
+        $group = $this->Groups->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $group = $this->Groups->patchEntity($group, $this->request->data);
             if ($this->Groups->save($group)) {

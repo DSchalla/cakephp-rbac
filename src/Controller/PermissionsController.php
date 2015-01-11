@@ -59,7 +59,16 @@ class PermissionsController extends AppController
     public function generate()
     {
 
-        $controllerActionList = $this->Permissions->generatePermission();
+        $controllerInfoModel=TableRegistry::get('Schalla/ControllerInfo.Data');
+        $controllerInfo=$controllerInfoModel->find('all')->all();
+
+        foreach ($controllerInfo as $controller) {
+            $methods=[];
+            foreach (unserialize($controller['methods']) as $method) {
+                $methods[]=$method->name;
+            }
+            $controller['methods']=$methods;
+        }
 
         if ($this->request->is('post')) {
             $controllerList = array_filter($this->request->data);
@@ -67,7 +76,7 @@ class PermissionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->set('controllerActionList', $controllerActionList);
+        $this->set('controllerInfo', $controllerInfo);
     }
 
 
@@ -80,7 +89,7 @@ class PermissionsController extends AppController
      */
     public function edit($id = null)
     {
-
+        // ToDo: Add default values when a group did not exist when permission was created
         $controllersTable = TableRegistry::get('Schalla/RBAC.Controllers');
         $groupsTable = TableRegistry::get('Schalla/RBAC.Groups');
 
@@ -91,8 +100,9 @@ class PermissionsController extends AppController
         }
 
         $groups = $groupsTable->find();
-        $permissions = $this->Permissions->find('all', ['contain' => ['Groups']])->where(['controller_id' => $id])->all(
-        );
+        $permissions = $this->Permissions->find('all', ['contain' => ['Groups']])
+                                         ->where(['controller_id' => $id])
+                                         ->all();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->Permissions->updatePermissionSet($id, $this->request->data)) {
@@ -102,7 +112,6 @@ class PermissionsController extends AppController
                 $this->Flash->error('The permission could not be saved. Please, try again.');
             }
         }
-
 
         $this->set('controller', $controller);
         $this->set('groups', $groups);
@@ -118,7 +127,7 @@ class PermissionsController extends AppController
      */
     public function delete($id = null)
     {
-
+        // ToDo: Disable delete for mandatory groups
         $permission = $this->permissions->get($id);
         $this->request->allowMethod(['post', 'delete']);
         if ($this->permissions->delete($permission)) {
