@@ -1,5 +1,5 @@
 <?php
-namespace Schalla\RBAC\Controller;
+namespace RBAC\Controller;
 
 use App\Controller\AppController;
 

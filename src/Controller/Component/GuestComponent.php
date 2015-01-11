@@ -1,6 +1,6 @@
 <?php
 
-namespace Schalla\RBAC\Controller\Component;
+namespace RBAC\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;

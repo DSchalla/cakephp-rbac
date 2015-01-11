@@ -1,5 +1,5 @@
 <?php
-namespace Schalla\RBAC\Model\Table;
+namespace RBAC\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;

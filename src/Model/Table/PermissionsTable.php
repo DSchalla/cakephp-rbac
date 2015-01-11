@@ -1,5 +1,5 @@
 <?php
-namespace Schalla\RBAC\Model\Table;
+namespace RBAC\Model\Table;
 
 use Cake\Filesystem\Folder;
 use Cake\ORM\Table;
@@ -29,7 +29,7 @@ class PermissionsTable extends Table
     {
         $this->table('rbac_permissions');
         $this->primaryKey('id');
-        $this->belongsTo('Schalla/RBAC.Controllers');
+        $this->belongsTo('RBAC.Controllers');
         $this->belongsToMany(
             'RBAC.Groups',
             [
@@ -56,8 +56,8 @@ class PermissionsTable extends Table
     public function saveGeneratePost(array $controllerList)
     {
 
-        $controllerModel = TableRegistry::get('Schalla/RBAC.Controllers');
-        $groupsModel = TableRegistry::get('Schalla/RBAC.Groups');
+        $controllerModel = TableRegistry::get('RBAC.Controllers');
+        $groupsModel = TableRegistry::get('RBAC.Groups');
 
         $groups = $groupsModel->find('all')->all();
         $groupEntity = [];

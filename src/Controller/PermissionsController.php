@@ -5,7 +5,7 @@
  * @link          https://www.schalla.me
  */
 
-namespace Schalla\RBAC\Controller;
+namespace RBAC\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
@@ -21,7 +21,7 @@ class PermissionsController extends AppController
      */
     public function index()
     {
-        $controllers = TableRegistry::get('Schalla/RBAC.Controllers');
+        $controllers = TableRegistry::get('RBAC.Controllers');
 
         $this->set('controllers', $this->paginate($controllers));
     }
@@ -36,7 +36,7 @@ class PermissionsController extends AppController
     public function view($id = null)
     {
 
-        $controllers = TableRegistry::get('Schalla/RBAC.Controllers');
+        $controllers = TableRegistry::get('RBAC.Controllers');
         $controller = $controllers->get($id);
 
         if (empty($controller)) {
@@ -59,7 +59,7 @@ class PermissionsController extends AppController
     public function generate()
     {
 
-        $controllerInfoModel=TableRegistry::get('Schalla/ControllerInfo.Data');
+        $controllerInfoModel=TableRegistry::get('ControllerInfo.Data');
         $controllerInfo=$controllerInfoModel->find('all')->all();
 
         foreach ($controllerInfo as $controller) {
@@ -90,8 +90,8 @@ class PermissionsController extends AppController
     public function edit($id = null)
     {
         // ToDo: Add default values when a group did not exist when permission was created
-        $controllersTable = TableRegistry::get('Schalla/RBAC.Controllers');
-        $groupsTable = TableRegistry::get('Schalla/RBAC.Groups');
+        $controllersTable = TableRegistry::get('RBAC.Controllers');
+        $groupsTable = TableRegistry::get('RBAC.Groups');
 
         $controller = $controllersTable->get($id);
 

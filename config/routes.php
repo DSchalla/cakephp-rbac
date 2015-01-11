@@ -1,6 +1,6 @@
 <?php
 use Cake\Routing\Router;
 
-Router::plugin('Schalla/RBAC', ['path' => '/rbac'], function ($routes) {
+Router::plugin('RBAC', ['path' => '/rbac'], function ($routes) {
     $routes->fallbacks('InflectedRoute');
 });
