@@ -9,8 +9,7 @@
         <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('controller') ?></th>
-            <th><?= $this->Paginator->sort('namespace') ?></th>
+            <th style="width:70%"><?= $this->Paginator->sort('controller') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
         </thead>
@@ -18,7 +17,6 @@
         <?php foreach ($controllers as $controller): ?>
             <tr>
                 <td><?= $this->Number->format($controller->id) ?></td>
-                <td><?= h($controller->namespace) ?></td>
                 <td><?= h($controller->controller) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('Details'), ['action' => 'view', $controller->id]) ?>

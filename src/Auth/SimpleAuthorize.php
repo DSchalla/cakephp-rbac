@@ -5,7 +5,7 @@
  * @link          https://www.schalla.me
  */
 
-namespace RBAC\Auth;
+namespace Schalla\RBAC\Auth;
 
 use Cake\Auth\BaseAuthorize;
 use Cake\Network\Request;

@@ -5,7 +5,7 @@
  * @link          https://www.schalla.me
  */
 
-namespace RBAC\Controller;
+namespace Schalla\RBAC\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
@@ -21,7 +21,7 @@ class PermissionsController extends AppController
      */
     public function index()
     {
-        $controllers = TableRegistry::get('RBAC.Controllers');
+        $controllers = TableRegistry::get('Schalla/RBAC.Controllers');
 
         $this->set('controllers', $this->paginate($controllers));
     }
@@ -36,7 +36,7 @@ class PermissionsController extends AppController
     public function view($id = null)
     {
 
-        $controllers = TableRegistry::get('RBAC.Controllers');
+        $controllers = TableRegistry::get('Schalla/RBAC.Controllers');
         $controller = $controllers->get($id);
 
         if (empty($controller)) {

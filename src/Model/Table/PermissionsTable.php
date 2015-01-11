@@ -1,5 +1,5 @@
 <?php
-namespace RBAC\Model\Table;
+namespace Schalla\RBAC\Model\Table;
 
 use Cake\Filesystem\Folder;
 use Cake\ORM\Table;

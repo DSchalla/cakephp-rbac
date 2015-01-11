@@ -1,5 +1,5 @@
 <?php
-namespace RBAC\Model\Entity;
+namespace Schalla\RBAC\Model\Entity;
 
 use Cake\ORM\Entity;
 
