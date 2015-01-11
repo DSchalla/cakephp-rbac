@@ -29,7 +29,7 @@ class PermissionsTable extends Table
     {
         $this->table('rbac_permissions');
         $this->primaryKey('id');
-        $this->belongsTo('RBAC.Controllers');
+        $this->belongsTo('Schalla/RBAC.Controllers');
         $this->belongsToMany(
             'RBAC.Groups',
             [

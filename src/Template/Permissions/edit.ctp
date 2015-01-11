@@ -42,7 +42,4 @@
     </table>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-    <pre>
-        <?php debug($permissions); ?>
-    </pre>
 </div>

@@ -81,8 +81,8 @@ class PermissionsController extends AppController
     public function edit($id = null)
     {
 
-        $controllersTable = TableRegistry::get('RBAC.Controllers');
-        $groupsTable = TableRegistry::get('RBAC.Groups');
+        $controllersTable = TableRegistry::get('Schalla/RBAC.Controllers');
+        $groupsTable = TableRegistry::get('Schalla/RBAC.Groups');
 
         $controller = $controllersTable->get($id);
 
