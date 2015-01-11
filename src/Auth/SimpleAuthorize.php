@@ -1,6 +1,6 @@
 <?php
- /**
- * Created by Daniel Schalla 
+/**
+ * Created by Daniel Schalla
  * @author        Daniel Schalla <daniel@schalla.me>
  * @link          https://www.schalla.me
  */
@@ -21,46 +21,56 @@ class SimpleAuthorize extends BaseAuthorize
 
     public function authorize($user, Request $request)
     {
-        $this->_userData=$user;
-        $this->_request=$request;
+        $this->_userData = $user;
+        $this->_request = $request;
         $this->_permissionModel = TableRegistry::get('RBAC.Permissions');
         $this->_userModel = TableRegistry::get($this->_config['Users']);
-        $this->_userModel->belongsToMany('RBAC.Groups',[
-            'joinTable'=>'rbac_users_groups'
-        ]);
+        $this->_userModel->belongsToMany(
+            'RBAC.Groups',
+            [
+                'joinTable' => 'rbac_users_groups'
+            ]
+        );
 
         return $this->_checkUser();
     }
 
-    private function _checkUser (){
+    private function _checkUser()
+    {
 
         if (empty($this->_userData['id'])) {
             return false;
         }
 
-        $userData=$this->_userModel->get(
+        $userData = $this->_userModel->get(
             $this->_userData['id'],
-            ['contain'=>[
-                'Groups',
-                'Groups.Permissions' => [
-                    'conditions' => [
-                        'action' => $this->_request->params['action']
+            [
+                'contain' => [
+                    'Groups',
+                    'Groups.Permissions' => [
+                        'conditions' => [
+                            'action' => $this->_request->params['action']
+                        ]
                     ]
                 ]
             ]
-        ]);
+        );
 
 
-        $permissionData=$this->_permissionModel
+        $permissionData = $this->_permissionModel
             ->find()
-            ->contain([
+            ->contain(
+                [
                     'Controllers',
                     'Groups'
-                ])
-            ->where([
+                ]
+            )
+            ->where(
+                [
                     'action' => $this->_request->params['action'],
                     'controller' => get_class($this->_registry->getController())
-            ])
+                ]
+            )
             ->first();
 
         if (!empty($permissionData)) {
@@ -70,20 +80,21 @@ class SimpleAuthorize extends BaseAuthorize
         return true;
     }
 
-    private function _checkGroups ($permission, $user) {
+    private function _checkGroups($permission, $user)
+    {
 
-        $validGroups=[];
-        $valid=false;
+        $validGroups = [];
+        $valid = false;
 
         foreach ($permission->groups as $group) {
             if ($group->_joinData['value']) {
-                $validGroups[]=$group['id'];
+                $validGroups[] = $group['id'];
             }
         }
 
         foreach ($user->groups as $group) {
             if (in_array($group['id'], $validGroups)) {
-                $valid=true;
+                $valid = true;
                 break;
             }
         }

@@ -6,15 +6,16 @@ use Cake\ORM\Entity;
 /**
  * Group Entity.
  */
-class Group extends Entity {
+class Group extends Entity
+{
 
-/**
- * Fields that can be mass assigned using newEntity() or patchEntity().
- *
- * @var array
- */
-	protected $_accessible = [
-		'title' => true,
-	];
+    /**
+     * Fields that can be mass assigned using newEntity() or patchEntity().
+     *
+     * @var array
+     */
+    protected $_accessible = [
+        'title' => true,
+    ];
 
 }

@@ -238,19 +238,22 @@ class PermissionsTable extends Table
         return true;
     }
 
-    public function updatePermissionSet($id, $postData) {
+    public function updatePermissionSet($id, $postData)
+    {
 
-        $permissions=$this->find('all')
-                           ->contain([
-                               'Controllers'=>[
-                                   'conditions'=> ['Controllers.id'=>$id]
-                               ],
-                               'Groups'
-                           ])->all();
+        $permissions = $this->find('all')
+            ->contain(
+                [
+                    'Controllers' => [
+                        'conditions' => ['Controllers.id' => $id]
+                    ],
+                    'Groups'
+                ]
+            )->all();
 
         foreach ($permissions as $permission) {
             foreach ($permission->groups as $group) {
-                $group['_joinData']['value']=$postData[$permission['action']][$group['title']];
+                $group['_joinData']['value'] = $postData[$permission['action']][$group['title']];
                 $this->Groups->RbacGroupsPermissions->save($group['_joinData']);
             }
         }

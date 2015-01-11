@@ -1,25 +1,27 @@
 <?php
- /**
- * Created by Daniel Schalla 
+/**
+ * Created by Daniel Schalla
  * @author        Daniel Schalla <daniel@schalla.me>
  * @link          https://www.schalla.me
  */
 
 namespace RBAC\Controller;
 
-use Cake\Core\App;
+use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
-class PermissionsController extends AppController{
+class PermissionsController extends AppController
+{
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index() {
-        $controllers=TableRegistry::get('RBAC.Controllers');
+    public function index()
+    {
+        $controllers = TableRegistry::get('RBAC.Controllers');
 
         $this->set('controllers', $this->paginate($controllers));
     }
@@ -31,16 +33,17 @@ class PermissionsController extends AppController{
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
-        $controllers=TableRegistry::get('RBAC.Controllers');
-        $controller=$controllers->get($id);
+        $controllers = TableRegistry::get('RBAC.Controllers');
+        $controller = $controllers->get($id);
 
-        if(empty($controller)) {
+        if (empty($controller)) {
             throw new NotFoundException;
         }
 
-        $permissions=$this->Permissions->find('all',['contain'=>'Controllers'])->where(['controller_id'=>$id]);
+        $permissions = $this->Permissions->find('all', ['contain' => 'Controllers'])->where(['controller_id' => $id]);
 
 
         $this->set('controller', $controller);
@@ -53,12 +56,13 @@ class PermissionsController extends AppController{
      * @return void
      */
 
-    public function generate() {
+    public function generate()
+    {
 
-        $controllerActionList=$this->Permissions->generatePermission();
+        $controllerActionList = $this->Permissions->generatePermission();
 
         if ($this->request->is('post')) {
-            $controllerList=array_filter($this->request->data);
+            $controllerList = array_filter($this->request->data);
             $this->Permissions->saveGeneratePost($controllerList);
             return $this->redirect(['action' => 'index']);
         }
@@ -74,19 +78,21 @@ class PermissionsController extends AppController{
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
-        $controllersTable=TableRegistry::get('RBAC.Controllers');
-        $groupsTable=TableRegistry::get('RBAC.Groups');
+        $controllersTable = TableRegistry::get('RBAC.Controllers');
+        $groupsTable = TableRegistry::get('RBAC.Groups');
 
-        $controller=$controllersTable->get($id);
+        $controller = $controllersTable->get($id);
 
-        if(empty($controller)) {
+        if (empty($controller)) {
             throw new NotFoundException;
         }
 
-        $groups=$groupsTable->find();
-        $permissions=$this->Permissions->find('all',['contain'=>['Groups']])->where(['controller_id'=>$id])->all();
+        $groups = $groupsTable->find();
+        $permissions = $this->Permissions->find('all', ['contain' => ['Groups']])->where(['controller_id' => $id])->all(
+        );
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->Permissions->updatePermissionSet($id, $this->request->data)) {
@@ -110,7 +116,8 @@ class PermissionsController extends AppController{
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $permission = $this->permissions->get($id);
         $this->request->allowMethod(['post', 'delete']);
