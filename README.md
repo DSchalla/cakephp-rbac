@@ -1,0 +1,2 @@
+# RBAC plugin for CakePHP
+
