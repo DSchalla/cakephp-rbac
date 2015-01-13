@@ -10,6 +10,7 @@ namespace RBAC\Auth;
 use Cake\Auth\BaseAuthorize;
 use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
 
 class SimpleAuthorize extends BaseAuthorize
 {
@@ -21,10 +22,11 @@ class SimpleAuthorize extends BaseAuthorize
 
     public function authorize($user, Request $request)
     {
+        $config=Configure::read('RBAC');
         $this->_userData = $user;
         $this->_request = $request;
         $this->_permissionModel = TableRegistry::get('RBAC.Permissions');
-        $this->_userModel = TableRegistry::get($this->_config['Users']);
+        $this->_userModel = TableRegistry::get($config['User']['Model']);
         $this->_userModel->belongsToMany(
             'RBAC.Groups',
             [

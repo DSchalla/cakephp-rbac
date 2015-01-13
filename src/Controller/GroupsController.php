@@ -21,6 +21,15 @@ class GroupsController extends AppController
         $this->set('groups', $this->paginate($this->Groups));
     }
 
+    public function view($id = null)
+    {
+        $group = $this->Groups->get($id, [
+                'contain' => ['Users']
+            ]);
+        $this->set('group', $group);
+        $this->set('_serialize', ['group']);
+    }
+
     /**
      * Add method
      *
