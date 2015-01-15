@@ -54,12 +54,10 @@ class PermissionsController extends AppController
      *
      * @return void
      */
-
     public function generate()
     {
-
         $controllerInfoModel=TableRegistry::get('ControllerInfo.Data');
-        $controllerInfo=$controllerInfoModel->find('all')->all();
+        $controllerInfo=$controllerInfoModel->find()->order(['class' => 'ASC']);
 
         foreach ($controllerInfo as $controller) {
             $methods=[];
