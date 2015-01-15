@@ -1,8 +1,6 @@
 <?php
 namespace RBAC\Controller;
 
-use App\Controller\AppController;
-
 /**
  * Groups Controller
  *

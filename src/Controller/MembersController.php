@@ -1,7 +1,6 @@
 <?php
 namespace RBAC\Controller;
 
-use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\ORM\Exception\MissingEntityException;
 use Cake\ORM\TableRegistry;

@@ -7,7 +7,6 @@
 
 namespace RBAC\Controller;
 
-use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
@@ -143,4 +142,4 @@ class PermissionsController extends AppController
     {
         $this->Permissions->generatePermission();
     }
-} 
+}
