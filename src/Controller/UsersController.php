@@ -1,8 +1,6 @@
 <?php
 namespace RBAC\Controller;
 
-use RBAC\Controller\AppController;
-
 /**
  * Users Controller
  *
