@@ -56,6 +56,12 @@ class PermissionsController extends AppController
      */
     public function generate()
     {
+        if ($this->request->is('post')) {
+            $controllerList = array_filter($this->request->data);
+            $this->Permissions->saveGeneratePost($controllerList);
+            return $this->redirect(['action' => 'index']);
+        }
+
         $controllerInfoModel=TableRegistry::get('ControllerInfo.Data');
         $controllerInfo=$controllerInfoModel->find()->order(['class' => 'ASC']);
 
@@ -66,12 +72,6 @@ class PermissionsController extends AppController
                 $methods[]=$method->name;
             }
             $controller['methods']=$methods;
-        }
-
-        if ($this->request->is('post')) {
-            $controllerList = array_filter($this->request->data);
-            $this->Permissions->saveGeneratePost($controllerList);
-            return $this->redirect(['action' => 'index']);
         }
 
         $this->set('controllerInfo', $controllerInfo);
