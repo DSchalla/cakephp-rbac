@@ -59,6 +59,7 @@ class PermissionsController extends AppController
         $controllerInfoModel=TableRegistry::get('ControllerInfo.Data');
         $controllerInfo=$controllerInfoModel->find()->order(['class' => 'ASC']);
 
+        // FIXME move to entity instead!
         foreach ($controllerInfo as $controller) {
             $methods=[];
             foreach (unserialize($controller['methods']) as $method) {
