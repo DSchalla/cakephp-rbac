@@ -1,0 +1,27 @@
+{
+    "area": {
+        "name": "Backend",
+        "navigation": {
+            "Main": {
+                "Groups": {
+                    "icon": "fa-group",
+                    "plugin": "RBAC",
+                    "controller": "Groups",
+                    "action": {
+                        "add": "New {plugin}"
+                    }
+                }
+            },
+            "Settings": {
+                "Permissions": {
+                    "icon": "fa-lock",
+                    "plugin": "RBAC",
+                    "controller": "Permissions",
+                    "action": {
+                        "generate": "Generate"
+                    }
+                }
+            }
+        }
+    }
+}

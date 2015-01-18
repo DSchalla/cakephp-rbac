@@ -1,14 +1,14 @@
 <?php
-namespace App\Test\TestCase\Model\Table;
+namespace RBAC\Test\TestCase\Model\Table;
 
-use App\Model\Table\GroupsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use RBAC\Model\Table\UsersTable;
 
 /**
- * App\Model\Table\GroupsTable Test Case
+ * RBAC\Model\Table\UsersTable Test Case
  */
-class GroupsTableTest extends TestCase
+class UsersTableTest extends TestCase
 {
 
     /**
@@ -17,7 +17,7 @@ class GroupsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'Groups' => 'app.groups'
+        'Users' => 'plugin.r_b_a_c.users'
     ];
 
     /**
@@ -28,8 +28,8 @@ class GroupsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Groups') ? [] : ['className' => 'App\Model\Table\GroupsTable'];
-        $this->Groups = TableRegistry::get('Groups', $config);
+        $config = TableRegistry::exists('Users') ? [] : ['className' => 'RBAC\Model\Table\UsersTable'];
+        $this->Users = TableRegistry::get('Users', $config);
     }
 
     /**
@@ -39,7 +39,7 @@ class GroupsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Groups);
+        unset($this->Users);
 
         parent::tearDown();
     }
@@ -60,6 +60,16 @@ class GroupsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

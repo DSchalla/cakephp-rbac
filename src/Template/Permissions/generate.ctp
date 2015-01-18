@@ -10,13 +10,14 @@
         <legend><?= __('Generate Permissions') ?></legend>
 
         <?php
-        foreach ($controllerActionList as $controllerAction) {
-            $name = $controllerAction['namespace'] . '\\' . $controllerAction['controller'];
+        foreach ($controllerInfo as $controller) {
+            $name = $controller['class'];
+
             echo $this->Form->input(
                 $name,
                 [
                     'label' => $name,
-                    'options' => array_combine($controllerAction['actions'], $controllerAction['actions']),
+                    'options' => array_combine($controller['methods'], $controller['methods']),
                     'multiple' => true,
                     'val' => false
                 ]

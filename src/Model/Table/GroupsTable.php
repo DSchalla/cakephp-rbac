@@ -1,8 +1,12 @@
 <?php
-namespace Schalla\RBAC\Model\Table;
+namespace RBAC\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use RBAC\Entity\Model\Group;
+use \ArrayObject;
 
 /**
  * Groups Model
@@ -18,6 +22,8 @@ class GroupsTable extends Table
      */
     public function initialize(array $config)
     {
+        $config=Configure::read('RBAC');
+
         $this->table('rbac_groups');
         $this->displayField('title');
         $this->primaryKey('id');
@@ -28,6 +34,9 @@ class GroupsTable extends Table
                 'joinTable' => 'rbac_groups_permissions'
             ]
         );
+        $this->belongsToMany($config['User']['Model'], [
+            'joinTable' => 'rbac_users_groups'
+        ]);
     }
 
     /**
@@ -47,4 +56,10 @@ class GroupsTable extends Table
         return $validator;
     }
 
+    public function beforeDelete(Event $event, Entity $entity, ArrayObject $options)
+    {
+        if ($entity->is_deletable === false) {
+            $event->stopPropagation();
+        }
+    }
 }

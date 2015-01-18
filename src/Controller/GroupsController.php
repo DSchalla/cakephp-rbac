@@ -1,7 +1,5 @@
 <?php
-namespace Schalla\RBAC\Controller;
-
-use App\Controller\AppController;
+namespace RBAC\Controller;
 
 /**
  * Groups Controller
@@ -19,6 +17,15 @@ class GroupsController extends AppController
     public function index()
     {
         $this->set('groups', $this->paginate($this->Groups));
+    }
+
+    public function view($id = null)
+    {
+        $group = $this->Groups->get($id, [
+                'contain' => ['Users']
+        ]);
+        $this->set('group', $group);
+        $this->set('_serialize', ['group']);
     }
 
     /**
@@ -49,12 +56,13 @@ class GroupsController extends AppController
      */
     public function edit($id = null)
     {
-        $group = $this->Groups->get(
-            $id,
-            [
-                'contain' => []
-            ]
-        );
+        $group = $this->Groups->get($id);
+
+        if (!$group->is_editable) {
+            $this->Flash->error('The group can not be edited.');
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $group = $this->Groups->patchEntity($group, $this->request->data);
             if ($this->Groups->save($group)) {
@@ -85,5 +93,4 @@ class GroupsController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
-
 }

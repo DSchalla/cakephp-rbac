@@ -20,5 +20,4 @@ class RBAC.GroupsControllerTest extends IntegrationTestCase {
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-
 }

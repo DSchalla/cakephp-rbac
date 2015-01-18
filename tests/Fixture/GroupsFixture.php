@@ -80,5 +80,4 @@ class GroupsFixture extends TestFixture
             'modified' => '2014-12-22 21:50:01'
         ],
     ];
-
 }

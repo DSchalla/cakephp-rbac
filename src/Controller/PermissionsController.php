@@ -4,10 +4,8 @@
  * @author        Daniel Schalla <daniel@schalla.me>
  * @link          https://www.schalla.me
  */
+namespace RBAC\Controller;
 
-namespace Schalla\RBAC\Controller;
-
-use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
@@ -21,7 +19,7 @@ class PermissionsController extends AppController
      */
     public function index()
     {
-        $controllers = TableRegistry::get('Schalla/RBAC.Controllers');
+        $controllers = TableRegistry::get('RBAC.Controllers');
 
         $this->set('controllers', $this->paginate($controllers));
     }
@@ -36,7 +34,7 @@ class PermissionsController extends AppController
     public function view($id = null)
     {
 
-        $controllers = TableRegistry::get('Schalla/RBAC.Controllers');
+        $controllers = TableRegistry::get('RBAC.Controllers');
         $controller = $controllers->get($id);
 
         if (empty($controller)) {
@@ -59,7 +57,16 @@ class PermissionsController extends AppController
     public function generate()
     {
 
-        $controllerActionList = $this->Permissions->generatePermission();
+        $controllerInfoModel=TableRegistry::get('ControllerInfo.Data');
+        $controllerInfo=$controllerInfoModel->find('all')->all();
+
+        foreach ($controllerInfo as $controller) {
+            $methods=[];
+            foreach (unserialize($controller['methods']) as $method) {
+                $methods[]=$method->name;
+            }
+            $controller['methods']=$methods;
+        }
 
         if ($this->request->is('post')) {
             $controllerList = array_filter($this->request->data);
@@ -67,7 +74,7 @@ class PermissionsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->set('controllerActionList', $controllerActionList);
+        $this->set('controllerInfo', $controllerInfo);
     }
 
 
@@ -80,9 +87,9 @@ class PermissionsController extends AppController
      */
     public function edit($id = null)
     {
-
-        $controllersTable = TableRegistry::get('Schalla/RBAC.Controllers');
-        $groupsTable = TableRegistry::get('Schalla/RBAC.Groups');
+        // ToDo: Add default values when a group did not exist when permission was created
+        $controllersTable = TableRegistry::get('RBAC.Controllers');
+        $groupsTable = TableRegistry::get('RBAC.Groups');
 
         $controller = $controllersTable->get($id);
 
@@ -91,8 +98,9 @@ class PermissionsController extends AppController
         }
 
         $groups = $groupsTable->find();
-        $permissions = $this->Permissions->find('all', ['contain' => ['Groups']])->where(['controller_id' => $id])->all(
-        );
+        $permissions = $this->Permissions->find('all', ['contain' => ['Groups']])
+                                         ->where(['controller_id' => $id])
+                                         ->all();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->Permissions->updatePermissionSet($id, $this->request->data)) {
@@ -102,7 +110,6 @@ class PermissionsController extends AppController
                 $this->Flash->error('The permission could not be saved. Please, try again.');
             }
         }
-
 
         $this->set('controller', $controller);
         $this->set('groups', $groups);
@@ -118,7 +125,7 @@ class PermissionsController extends AppController
      */
     public function delete($id = null)
     {
-
+        // ToDo: Disable delete for mandatory groups
         $permission = $this->permissions->get($id);
         $this->request->allowMethod(['post', 'delete']);
         if ($this->permissions->delete($permission)) {
@@ -134,4 +141,4 @@ class PermissionsController extends AppController
     {
         $this->Permissions->generatePermission();
     }
-} 
+}
