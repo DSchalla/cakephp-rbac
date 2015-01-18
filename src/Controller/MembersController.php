@@ -16,7 +16,6 @@ class MembersController extends AppController
 
     public function initialize()
     {
-        $this->theme='Theme/CsphereBackend';
         $this->_config=Configure::read('RBAC');
         $this->loadModel('RBAC.Groups');
         $this->loadModel($this->_config['User']['Model']);
@@ -107,4 +106,5 @@ class MembersController extends AppController
         }
         return $this->redirect(['action' => 'index', $relation->group_id]);
     }
+
 }

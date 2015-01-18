@@ -1,4 +1,5 @@
 <?php
+
 namespace RBAC\Controller\Component;
 
 use Cake\Controller\Component;
@@ -10,4 +11,5 @@ class GuestComponent extends Component
     {
 
     }
+
 }

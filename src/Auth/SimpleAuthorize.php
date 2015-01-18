@@ -4,6 +4,7 @@
  * @author        Daniel Schalla <daniel@schalla.me>
  * @link          https://www.schalla.me
  */
+
 namespace RBAC\Auth;
 
 use Cake\Auth\BaseAuthorize;
